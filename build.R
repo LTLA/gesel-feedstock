@@ -1,7 +1,7 @@
 library(jsonlite)
 library(S4Vectors)
 library(BiocFileCache)
-bfc <- BiocFileCache(".cache", ask=FALSE)
+bfc <- BiocFileCache("gmt_cache", ask=FALSE)
 
 manifest <- jsonlite::fromJSON("manifest.json", simplifyVector=FALSE)
 descriptions <- list()
@@ -78,9 +78,11 @@ gathered <- list(
 
 library(AnnotationHub)
 found.symbol <- found.symbol.ids <- found.entrez <- found.entrez.ids <- character(0)
+ahub <- AnnotationHub(cache="ensdb_cache")
+
 for (x in names(species.genes)) {
     gc()
-    ensdb <- AnnotationHub()[[gathered[[x]]]]
+    ensdb <- ahub[[gathered[[x]]]]
     
     mapped.symbol <- select(ensdb, keys=species.genes[[x]], keytype="GENEID", columns="SYMBOL")
     keep <- !is.na(mapped.symbol$SYMBOL)
