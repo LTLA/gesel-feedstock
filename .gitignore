@@ -1,2 +1,4 @@
 *.gmt.gz
 *.swp
+.cache/
+assets/
