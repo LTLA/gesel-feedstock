@@ -18,7 +18,7 @@
     {
         "title": "Gene ontology for rat",
         "description": "Rat gene sets defined from the Gene Ontology (version 2022-07-01), sourced from the Bioconductor package org.Rn.eg.db 3.16.0.",
-        "species": "Mus musculus",
+        "species": "Rattus norvegicus",
         "maintainer": "Aaron Lun",
         "source": "https://github.com/LTLA/gesel-feedstock/blob/gene-ontology-v1.0.0/go/build.R",
         "url": "https://github.com/LTLA/gesel-feedstock/releases/download/gene-ontology-v1.0.0/rat-GO.gmt.gz"
