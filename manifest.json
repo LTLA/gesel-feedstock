@@ -1,0 +1,58 @@
+[
+    {
+        "title": "Gene ontology for human",
+        "description": "Human gene sets defined from the Gene Ontology (version 2022-07-01), sourced from the Bioconductor package org.Hs.eg.db 3.16.0.",
+        "species": "Homo sapiens",
+        "maintainer": "Aaron Lun",
+        "source": "https://github.com/LTLA/gesel-feedstock/blob/gene-ontology-v1.0.0/go/build.R",
+        "url": "https://github.com/LTLA/gesel-feedstock/releases/download/gene-ontology-v1.0.0/human-GO.gmt.gz"
+    },
+    {
+        "title": "Gene ontology for mouse",
+        "description": "Mouse gene sets defined from the Gene Ontology (version 2022-07-01), sourced from the Bioconductor package org.Mm.eg.db 3.16.0.",
+        "species": "Mus musculus",
+        "maintainer": "Aaron Lun",
+        "source": "https://github.com/LTLA/gesel-feedstock/blob/gene-ontology-v1.0.0/go/build.R",
+        "url": "https://github.com/LTLA/gesel-feedstock/releases/download/gene-ontology-v1.0.0/mouse-GO.gmt.gz"
+    },
+    {
+        "title": "Gene ontology for rat",
+        "description": "Rat gene sets defined from the Gene Ontology (version 2022-07-01), sourced from the Bioconductor package org.Rn.eg.db 3.16.0.",
+        "species": "Mus musculus",
+        "maintainer": "Aaron Lun",
+        "source": "https://github.com/LTLA/gesel-feedstock/blob/gene-ontology-v1.0.0/go/build.R",
+        "url": "https://github.com/LTLA/gesel-feedstock/releases/download/gene-ontology-v1.0.0/rat-GO.gmt.gz"
+    },
+    {
+        "title": "Gene ontology for worm",
+        "description": "Worm gene sets defined from the Gene Ontology (version 2022-07-01), sourced from the Bioconductor package org.Ce.eg.db 3.16.0.",
+        "species": "Caenorhabditis elegans",
+        "maintainer": "Aaron Lun",
+        "source": "https://github.com/LTLA/gesel-feedstock/blob/gene-ontology-v1.0.0/go/build.R",
+        "url": "https://github.com/LTLA/gesel-feedstock/releases/download/gene-ontology-v1.0.0/worm-GO.gmt.gz"
+    },
+    {
+        "title": "Gene ontology for zebrafish",
+        "description": "Zebrafish gene sets defined from the Gene Ontology (version 2022-07-01), sourced from the Bioconductor package org.Dr.eg.db 3.16.0.",
+        "species": "Danio rerio",
+        "maintainer": "Aaron Lun",
+        "source": "https://github.com/LTLA/gesel-feedstock/blob/gene-ontology-v1.0.0/go/build.R",
+        "url": "https://github.com/LTLA/gesel-feedstock/releases/download/gene-ontology-v1.0.0/zebrafish-GO.gmt.gz"
+    },
+    {
+        "title": "Gene ontology for fly",
+        "description": "Fly gene sets defined from the Gene Ontology (version 2022-07-01), sourced from the Bioconductor package org.Dm.eg.db 3.16.0.",
+        "species": "Drosophila melanogaster",
+        "maintainer": "Aaron Lun",
+        "source": "https://github.com/LTLA/gesel-feedstock/blob/gene-ontology-v1.0.0/go/build.R",
+        "url": "https://github.com/LTLA/gesel-feedstock/releases/download/gene-ontology-v1.0.0/fly-GO.gmt.gz"
+    },
+    {
+        "title": "Gene ontology for chimp",
+        "description": "Chimp gene sets defined from the Gene Ontology (version 2022-07-01), sourced from the Bioconductor package org.Pt.eg.db 3.16.0.",
+        "species": "Pan troglodytes",
+        "maintainer": "Aaron Lun",
+        "source": "https://github.com/LTLA/gesel-feedstock/blob/gene-ontology-v1.0.0/go/build.R",
+        "url": "https://github.com/LTLA/gesel-feedstock/releases/download/gene-ontology-v1.0.0/chimp-GO.gmt.gz"
+    }
+]
