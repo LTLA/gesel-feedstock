@@ -1,4 +1,4 @@
 *.gmt.gz
 *.swp
-.cache/
+*_cache/
 assets/
