@@ -146,42 +146,38 @@ saveTabbedIndices(by.set, path="set2gene.tsv")
 saveTabbedIndices(by.ntoken, path="tokens-names.tsv", include.names=TRUE)
 saveTabbedIndices(by.dtoken, path="tokens-descriptions.tsv", include.names=TRUE)
 
-saveLines <- function(lines, path) {
+saveLines <- function(lines, path, ...) {
     write(lines, file=file.path(dir, path))
-    handle <- gzfile(file.path(dir, paste0(path, ".ranges.gz")))
-    write(nchar(lines, type="bytes"), file=handle, ncolumns=1) # deal with UTF-8 chars.
+
+    nc <- nchar(lines, type="bytes") # deal with UTF-8 chars.
+
+    handle <- gzfile(file.path(dir, paste0(path, ".ranges.gz")), open="wb")
+    write.table(data.frame(X=nc, ...), file=handle, row.names=FALSE, quote=FALSE, col.names=FALSE, sep="\t")
     close(handle)
 }
 
 {
     tstripped <- gsub("\t|\n", " ", collections$title)
     dstripped <- gsub("\t|\n", " ", collections$description)
+    common <- sprintf("%s\t%s\t%s\t%s\t%s", tstripped, dstripped, collections$species, collections$maintainer, collections$source)
+    saveLines(common, "collections.tsv", size=collections$number)
 
-    collected <- sprintf("%s\t%s\t%s\t%s\t%s\t%s", tstripped, dstripped, collections$species, collections$maintainer, collections$source, collections$number)
+    collected <- sprintf("%s\t%s", common, collections$number)
     handle <- gzfile(file.path(dir, "collections.tsv.gz"))
     write(collected, file=handle, ncolumns=1)
     close(handle)
-
-    collections.start <- c(0L, head(cumsum(collections$number), -1))
-    collected <- sprintf("%s\t%s", collected, collections.start)
-    saveLines(collected, "collections.tsv")
 }
 
 {
-    descriptions.collections <- rep(seq_along(collections$number) - 1L, collections$number)
-    stopifnot(length(descriptions.collections) == nrow(descriptions))
-    descriptions.internal <- sequence(collections$number) - 1L
-    stopifnot(length(descriptions.internal) == nrow(descriptions))
-
     nstripped <- gsub("\t|\n", " ", descriptions$name) 
     dstripped <- gsub("\t|\n", " ", descriptions$description) 
-    collected <- sprintf("%s\t%s\t%s", nstripped, dstripped, descriptions$size)
+    common <- sprintf("%s\t%s", nstripped, dstripped)
+    saveLines(common, "sets.tsv", size=descriptions$size)
+
+    collected <- sprintf("%s\t%s", common, descriptions$size)
     handle <- gzfile(file.path(dir, "sets.tsv.gz"))
     write(collected, file=handle, ncolumns=1)
     close(handle)
-
-    collected <- sprintf("%s\t%s\t%s", collected, descriptions.collections, descriptions.internal)
-    saveLines(collected, "sets.tsv")
 }
 
 collected <- vapply(symbol.mapping, function(x) paste(gsub("\t|\n", " ", x), collapse="\t"), "")

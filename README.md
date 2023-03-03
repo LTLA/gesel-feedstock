@@ -33,14 +33,15 @@ Each gene's identity (i.e., the "gene ID") is defined as the 0-based index of th
 Each collection's identity (i.e., the "collection ID") is defined as the 0-based index of the corresponding line in `collections.tsv.gz`.
 
 `collections.tsv` is an uncompressed tab-separated file that has the same number of lines and order of collections as `collections.tsv.gz`.
-It contains all fields in `collections.tsv.gz` with an additional column:
-
-- `start`: the line index marking the start of this collection's gene sets in `sets.tsv`.
+It contains all fields in `collections.tsv.gz` except for `number`.
 
 `collections.tsv.ranges.gz` is a Gzip-compressed file where each line corresponds to a collection in `collections.tsv`.
-Each line contains an integer specifying the number of bytes taken up by the corresponding line in `collections.tsv` (excluding the newline).
+Each line contains the following fields:
 
-It is intended that applications can either download `collections.tsv.gz` to obtain information about all collections,
+- `bytes`: the number of bytes taken up by the corresponding line in `collections.tsv` (excluding the newline).
+- `number`: the number of gene sets in this collection.
+
+Applications can either download `collections.tsv.gz` to obtain information about all collections,
 or they can download `collections.tsv.ranges.gz` and perform HTTP range requests on `collections.tsv` to obtain information about individual collections.
 The former pays a higher up-front cost for easier batch processing.
 To reduce the download size, we do not store `start` in `collections.tsv.gz`, as these can be computed easily on the client. 
@@ -56,17 +57,16 @@ To reduce the download size, we do not store `start` in `collections.tsv.gz`, as
 Each set's identity (i.e., the "set ID") is defined as the 0-based index of the corresponding line in `sets.tsv.gz`.
 Sets from the same collection are always stored in consecutive lines, ordered by their position within that collection.
 
-`sets.tsv` is an uncompressed tab-separated file that has the same number of lines and order of setss as `sets.tsv.gz`.
-It contains all fields in `sets.tsv.gz` with some additional columns:
-
-- `collection`: the collection ID of the parent collection that contains this set.
-- `position`: the position of this set inside the parent collection.
-  For example, a position of 0 indicates this set is the first in its collection.
+`sets.tsv` is an uncompressed tab-separated file that has the same number of lines and order of sets as `sets.tsv.gz`.
+It contains all fields in `sets.tsv.gz` except for `size`.
 
 `sets.tsv.ranges.gz` is a Gzip-compressed file where each line corresponds to a set in `sets.tsv`.
-Each line contains an integer specifying the number of bytes taken up by the corresponding line in `sets.tsv` (excluding the newline).
+Each line contains two tab-separated fields:
 
-It is intended that applications can either download `sets.tsv.gz` to obtain information about all sets,
+- `bytes`: the number of bytes taken up by the corresponding line in `sets.tsv` (excluding the newline).
+- `size`: the number of genes in the set.
+
+Applications can either download `sets.tsv.gz` to obtain information about all sets,
 or they can download `sets.tsv.ranges.gz` and perform HTTP range requests on `sets.tsv` to obtain information about individual sets.
 The former pays a higher up-front cost for easier batch processing.
 To reduce the download size, we do not store `collection` and `position` in `sets.tsv.gz`, as these can be computed easily on the client. 
