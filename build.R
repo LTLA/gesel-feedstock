@@ -78,7 +78,7 @@ gathered <- list(
 
 library(AnnotationHub)
 found.symbol <- found.symbol.ids <- found.entrez <- found.entrez.ids <- character(0)
-ahub <- AnnotationHub(cache="ensdb_cache")
+ahub <- AnnotationHub(cache="ensdb_cache", ask=FALSE)
 
 for (x in names(species.genes)) {
     gc()
@@ -154,16 +154,17 @@ saveLines <- function(lines, path) {
 }
 
 {
-    collections.start <- c(0L, head(cumsum(collections$number), -1))
     tstripped <- gsub("\t|\n", " ", collections$title)
     dstripped <- gsub("\t|\n", " ", collections$description)
-    collected <- sprintf("%s\t%s\t%s\t%s\t%s\t%s\t%s\t$s", collections$id, collections.start, collections$number, tstripped, dstripped, collections$species, collections$maintainer, collections$source)
-    saveLines(collected, "collections.tsv")
 
-    collected <- sprintf("%s\t%s\t%s\t%s\t%s\t%s\t%s", collections$id, collections$number, tstripped, dstripped, collections$species, collections$maintainer, collections$source)
+    collected <- sprintf("%s\t%s\t%s\t%s\t%s\t%s", tstripped, dstripped, collections$species, collections$maintainer, collections$source, collections$number)
     handle <- gzfile(file.path(dir, "collections.tsv.gz"))
     write(collected, file=handle, ncolumns=1)
     close(handle)
+
+    collections.start <- c(0L, head(cumsum(collections$number), -1))
+    collected <- sprintf("%s\t%s", collected, collections.start)
+    saveLines(collected, "collections.tsv")
 }
 
 {
@@ -174,13 +175,13 @@ saveLines <- function(lines, path) {
 
     nstripped <- gsub("\t|\n", " ", descriptions$name) 
     dstripped <- gsub("\t|\n", " ", descriptions$description) 
-    collected <- sprintf("%s\t%s\t%s\t%s\t%s", nstripped, dstripped, descriptions$size, descriptions.collections, descriptions.internal)
-    saveLines(collected, "sets.tsv")
-
     collected <- sprintf("%s\t%s\t%s", nstripped, dstripped, descriptions$size)
     handle <- gzfile(file.path(dir, "sets.tsv.gz"))
     write(collected, file=handle, ncolumns=1)
     close(handle)
+
+    collected <- sprintf("%s\t%s\t%s", collected, descriptions.collections, descriptions.internal)
+    saveLines(collected, "sets.tsv")
 }
 
 collected <- vapply(symbol.mapping, function(x) paste(gsub("\t|\n", " ", x), collapse="\t"), "")
