@@ -1,6 +1,8 @@
 # Build gene sets to feed gesel
 
 This repository contains code to build indices for **gesel**, the client-side gene set search interface.
+The indices themselves are available on the [Releases page](https://github.com/LTLA/gesel-feedstock/releases);
+this can be fetched by applications directly or via a CORS proxy.
 
 ## Overview of resources
 
