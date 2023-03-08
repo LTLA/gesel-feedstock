@@ -2,7 +2,6 @@ library(jsonlite)
 library(S4Vectors)
 library(BiocFileCache)
 bfc <- BiocFileCache("gmt_cache", ask=FALSE)
-gene_cache <- BiocFileCache("gmt_cache", ask=FALSE)
 
 manifest <- jsonlite::fromJSON("manifest.json", simplifyVector=FALSE)
 
@@ -52,7 +51,7 @@ for (i in seq_along(manifest)) {
     # Mapping to the gene IDs.
     gene.mappings <- species.mapping[[cur.species]]
     if (!(current$id %in% names(gene.mappings))) {
-        gene.path <- bfcrpath(gene_cache, paste0("https://github.com/LTLA/gesel-feedstock/releases/download/genes-v1.0.0/", cur.species, "_", current$id, ".tsv.gz"))
+        gene.path <- bfcrpath(bfc, paste0("https://github.com/LTLA/gesel-feedstock/releases/download/genes-v1.0.0/", cur.species, "_", current$id, ".tsv.gz"))
         all.lines <- readLines(gene.path)
         collected <- vector("list", length(all.lines))
         keep <- all.lines != ""

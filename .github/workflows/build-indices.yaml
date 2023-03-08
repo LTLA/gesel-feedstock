@@ -38,7 +38,7 @@ jobs:
         key: gmt-20230203
 
     - name: Build the indices
-      run: R -f "build.R"
+      run: R -f "build_index.R"
 
     - name: Create a release
       uses: softprops/action-gh-release@v1
