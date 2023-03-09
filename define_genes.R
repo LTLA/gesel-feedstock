@@ -53,7 +53,7 @@ for (species in names(lists)) {
     pooled <- names(classes$membership)
 
     is.entrez <- grepl("^[0-9]", pooled)
-    f <- factor(unname(classes$membership))
+    f <- factor(as.integer(unname(classes$membership)))
     stopifnot(identical(levels(f), as.character(seq_along(levels(f)))))
 
     names.entrez <- names(classes$membership)[is.entrez]
