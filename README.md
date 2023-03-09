@@ -6,17 +6,20 @@ this can be fetched by applications directly or via a CORS proxy.
 
 ## Overview of resources
 
+Each species contains a separate copy of the files described in this section.
+Files from a particular species will be prefixed with that species' NCBI taxonomy ID, e.g., `9606_ensembl.tsv.gz`.
+For brevity, we will omit the prefix in the rest of this section.
+
 ### Gene mappings
 
-`symbol2gene.tsv.gz` is a Gzip-compressed tab-separated file where each line corresponds to one Ensembl gene.
-The first field is the Ensembl identifier and the remaining fields are symbols associated with that identifier.
-Each gene may have zero, one or multiple associated symbols.
+Genes are defined as abstract "equivalence classes" that can be associated with one, zero or multiple identifiers or symbols.
+Each equivalence class is defined as a component of the graph constructed from the relationships between Ensembl and Entrez identifiers.
 
-`entrez2gene.tsv.gz` is a Gzip-compressed tab-separated file where each line corresponds to one Ensembl gene.
-The first field is the Ensembl identifier and the remaining fields are Entrez IDs associated with that identifier.
-Each gene may have zero, one or multiple associated Entrez IDs.
+- `ensembl.tsv.gz` is a Gzip-compressed tab-separated file where each line corresponds to a gene equivalence class, and the fields are Ensembl identifiers associated with that gene.
+- `entrez.tsv.gz` is a Gzip-compressed tab-separated file where each line corresponds to a gene equivalence class, and the fields are Entrez identifiers associated with that gene.
+- `symbol.tsv.gz` is a Gzip-compressed tab-separated file where each line corresponds to a gene equivalence class, and the fields are symbols associated with that gene.
 
-Both `symbol2gene.tsv.gz` and `entrez2gene.tsv.gz` have the same number and order of rows.
+All files have the same number of lines as they represent difference aspects of the same underlying array of equivalence classes.
 Each gene's identity (i.e., the "gene ID") is defined as the 0-based index of the corresponding line in either file.
 
 ### Collection details
@@ -121,10 +124,12 @@ Each entry in the array represents a collection with the following metadata:
   This should not contain tabs or newlines.
 - `description`: the description of the collection.
   This should not contain tabs or newlines.
-- `species`: the full name of the species.
+- `species`: the NCBI taxonomy ID for the species.
 - `maintainer`: the name of the maintainer of the collection.
 - `source`: the source of the collection.
   This may reference an article or the code used to generate the collection, and is intended for human readers.
+- `id`: the type of identifier.
+  This should be one of `"entrez"`, `"ensembl"` or `"symbol"`; the former two are more reliable and preferred.
 - `url`: the URL to the collection's GMT file.
   This should be downloadable.
   The GMT file should use Ensembl identifiers for all genes.
