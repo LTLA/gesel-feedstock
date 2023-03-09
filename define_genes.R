@@ -39,19 +39,21 @@ for (species in names(lists)) {
     from.o <- select(orgdb, keys=keys(orgdb), columns="ENSEMBL")
     from.e <- select(ensdb, keys=keys(ensdb), columns="ENTREZID")
 
-    edges <- rbind(
+    all.edges <- rbind(
         DataFrame(ensembl = from.o$ENSEMBL, entrez = from.o$ENTREZID),
         DataFrame(ensembl = from.e$GENEID, entrez = from.e$ENTREZID)
     )
-    edges <- edges[!is.na(edges$ensembl) & !is.na(edges$entrez),]
+    edges <- all.edges[!is.na(all.edges$ensembl) & !is.na(all.edges$entrez),]
     edges <- unique(edges)
 
-    g <- make_graph(rbind(edges$ensembl, edges$entrez), directed=FALSE)
+    all.ensembl <- setdiff(unique(all.edges$ensembl), unique(edges$ensembl))
+    all.entrez <- setdiff(unique(all.edges$entrez), unique(edges$entrez))
+    g <- make_graph(rbind(edges$ensembl, edges$entrez), isolates=c(all.ensembl[!is.na(all.ensembl)], all.entrez[!is.na(all.entrez)]), directed=FALSE)
     classes <- components(g)
     pooled <- names(classes$membership)
 
     is.entrez <- grepl("^[0-9]", pooled)
-    f <- factor(classes$membership)
+    f <- factor(unname(classes$membership))
     stopifnot(identical(levels(f), as.character(seq_along(levels(f)))))
 
     names.entrez <- names(classes$membership)[is.entrez]

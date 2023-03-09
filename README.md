@@ -16,8 +16,11 @@ Genes are defined as abstract "equivalence classes" that can be associated with 
 Each equivalence class is defined as a component of the graph constructed from the relationships between Ensembl and Entrez identifiers.
 
 - `ensembl.tsv.gz` is a Gzip-compressed tab-separated file where each line corresponds to a gene equivalence class, and the fields are Ensembl identifiers associated with that gene.
+  An empty line indicates that the equivalence class contains no Ensembl IDs.
 - `entrez.tsv.gz` is a Gzip-compressed tab-separated file where each line corresponds to a gene equivalence class, and the fields are Entrez identifiers associated with that gene.
+  An empty line indicates that the equivalence class contains no Entrez IDs.
 - `symbol.tsv.gz` is a Gzip-compressed tab-separated file where each line corresponds to a gene equivalence class, and the fields are symbols associated with that gene.
+  An empty line indicates that the equivalence class contains no symbols.
 
 All files have the same number of lines as they represent difference aspects of the same underlying array of equivalence classes.
 Each gene's identity (i.e., the "gene ID") is defined as the 0-based index of the corresponding line in either file.

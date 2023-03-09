@@ -23,7 +23,7 @@ jobs:
 
     - name: Install dependencies
       shell: Rscript {0}
-      run: BiocManager::install(c("jsonlite", "S4Vectors", "BiocFileCache", "AnnotationHub", "ensembldb"))
+      run: BiocManager::install(c("jsonlite", "S4Vectors", "BiocFileCache", "AnnotationHub", "igraph", "ensembldb"))
 
     - name: Restore the EnsDb directory
       uses: actions/cache@v3
