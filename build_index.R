@@ -11,6 +11,7 @@ species.counter <- list()
 species.mapping <- list()
 species.sets <- list()
 species.genes <- list()
+species.ngenes <- list()
 
 for (i in seq_along(manifest)) {
     current <- manifest[[i]]
@@ -53,9 +54,12 @@ for (i in seq_along(manifest)) {
     if (!(current$id %in% names(gene.mappings))) {
         gene.path <- bfcrpath(bfc, paste0("https://github.com/LTLA/gesel-feedstock/releases/download/genes-v1.0.0/", cur.species, "_", current$id, ".tsv.gz"))
         all.lines <- readLines(gene.path)
+        species.ngenes[[cur.species]] <- length(all.lines)
+
         collected <- vector("list", length(all.lines))
         keep <- all.lines != ""
         collected[keep] <- strsplit(all.lines[keep], "\t")
+
         gene.mappings[[current$id]] <- split(rep(seq_along(collected), lengths(collected)), unlist(collected))
         species.mapping[[cur.species]] <- gene.mappings
     }
@@ -131,7 +135,7 @@ for (species in names(species.descriptions)) {
 
     all.genes <- species.genes[[species]]
     all.ids <- species.sets[[species]]
-    by.gene <- split(all.ids, factor(all.genes, seq_along(species.mapping[[species]][[1]])))
+    by.gene <- split(all.ids, factor(all.genes, seq_len(species.ngenes[[species]])))
     by.set <- split(all.genes, factor(all.ids, seq_len(nrow(descriptions))))
 
     # Build a search index for the descriptions and names.
