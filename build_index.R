@@ -99,9 +99,13 @@ dir.create(dir)
 
 saveTabbedIndices <- function(y, path, include.names = FALSE) {
     x <- vapply(y, function(z) {
-        z <- sort(z) # convert to diffs to reduce integer size
-        z <- c(z[1] - 1L, diff(z)) # get to 0-based indexing.
-        paste(z, collapse="\t")
+        if (length(z)) {
+            z <- sort(z) # convert to diffs to reduce integer size
+            z <- c(z[1] - 1L, diff(z)) # get to 0-based indexing.
+            paste(z, collapse="\t")
+        } else {
+            ""
+        }
     }, "")
     write(x, file=file.path(dir, path))
 
