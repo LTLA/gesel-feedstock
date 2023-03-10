@@ -76,7 +76,7 @@ for (i in seq_along(manifest)) {
     # Filling the values.
     j <- length(species.descriptions[[cur.species]]) + 1L
     species.descriptions[[cur.species]][[j]] <- DataFrame(name=set.names, description=set.descriptions, size=lengths(cursets))
-    species.collections[[cur.species]][[j]] <- DataFrame(number = length(cursets), title=current$title, description=current$description, species=cur.species, maintainer=current$maintainer, source=current$source)
+    species.collections[[cur.species]][[j]] <- DataFrame(number = length(set.names), title=current$title, description=current$description, species=cur.species, maintainer=current$maintainer, source=current$source)
 
     species.genes[[cur.species]] <- c(species.genes[[cur.species]], gene.ids)
     species.sets[[cur.species]] <- c(species.sets[[cur.species]], set.ids)
@@ -99,7 +99,7 @@ dir.create(dir)
 
 saveTabbedIndices <- function(y, path, include.names = FALSE) {
     x <- vapply(y, function(z) {
-        z <- unique(sort(z)) # convert to diffs to reduce integer size
+        z <- sort(z) # convert to diffs to reduce integer size
         z <- c(z[1] - 1L, diff(z)) # get to 0-based indexing.
         paste(z, collapse="\t")
     }, "")
@@ -136,7 +136,11 @@ for (species in names(species.descriptions)) {
     all.genes <- species.genes[[species]]
     all.ids <- species.sets[[species]]
     by.gene <- split(all.ids, factor(all.genes, seq_len(species.ngenes[[species]])))
+    by.gene <- lapply(by.gene, unique)
     by.set <- split(all.genes, factor(all.ids, seq_len(nrow(descriptions))))
+    by.set <- lapply(by.set, unique)
+
+    descriptions$size <- lengths(by.set)
 
     # Build a search index for the descriptions and names.
     by.dtoken <- tokenizer(descriptions$description)
