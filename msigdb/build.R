@@ -4,15 +4,27 @@
 version <- "v2023.1"
 ignore <- c(
     "c2.cp.kegg", # difficult license
-    "m2.cp.kegg", # difficult license
     "c2.cp.biocarta", # difficult license
     "m2.cp.biocarta", # difficult license
     "c2.all", # includes the above
+    "m2.all", # includes the above
     paste0("c2.cp.", version), # includes the above
+    paste0("m2.cp.", version), # includes the above
+
     "c3.all", # too much stuff
+    "m3.all", # too much stuff
+    "c3.mir.mir_legacy", # old stuff, to be ignored.
+    paste0("c3.mir.", version), # duplicate 
+    "c3.tft.tft_legacy", # old stuff, to be ignored.
+    paste0("c3.tft.", version), # duplicate 
+
     "c4.all", # too much stuff
+
     "c5.all", # too much stuff
+    "m5.all", # too much stuff
     "c5.go", # duplicate of existing GO terms
+    "m5.go", # duplicate of existing GO terms
+
     "c7.all", # too much stuff
     "msigdb" # too much stuff, and also includes the difficult licenses.
 )

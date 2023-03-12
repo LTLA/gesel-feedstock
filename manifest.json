@@ -61,5 +61,140 @@
         "id": "entrez",
         "source": "https://github.com/LTLA/gesel-feedstock/blob/gene-ontology-v1.0.0/go/build.R",
         "url": "https://github.com/LTLA/gesel-feedstock/releases/download/gene-ontology-v1.0.0/chimp-GO.gmt.gz"
+    },
+    {
+        "title": "MSigDB positional gene sets (C1)",
+        "description": "Gene annotations for this collection are derived from the Chromosome and Karyotype band tracks from Ensembl BioMart.",
+        "species": "9606",
+        "maintainer": "Aaron Lun",
+        "id": "entrez",
+        "source": "https://github.com/LTLA/gesel-feedstock/blob/master/msigdb/build.R",
+        "url": "https://github.com/LTLA/gesel-feedstock/releases/download/msigdb-v1.0.0/c1.all.v2023.1.Hs.entrez.gmt.gz"
+    },
+    {
+        "title": "MSigDB chemical and genetic perturbations (C2 CGP)",
+        "description": "Gene sets that represent expression signatures of genetic and chemical perturbations.",
+        "species": "9606",
+        "maintainer": "Aaron Lun",
+        "id": "entrez",
+        "source": "https://github.com/LTLA/gesel-feedstock/blob/master/msigdb/build.R",
+        "url": "https://github.com/LTLA/gesel-feedstock/releases/download/msigdb-v1.0.0/c2.cgp.v2023.1.Hs.entrez.gmt.gz"
+    },
+    {
+        "title": "MSigDB canonical pathways (C2 PID)",
+        "description": "Gene sets derived from the Pathway Interaction Database.",
+        "species": "9606",
+        "maintainer": "Aaron Lun",
+        "id": "entrez",
+        "source": "https://github.com/LTLA/gesel-feedstock/blob/master/msigdb/build.R",
+        "url": "https://github.com/LTLA/gesel-feedstock/releases/download/msigdb-v1.0.0/c2.cp.pid.v2023.1.Hs.entrez.gmt.gz"
+    },
+    {
+        "title": "MSigDB canonical pathways (C2 Reactome)",
+        "description": "Reactome gene sets are derived from Reactome and have been filtered to remove inter-set redundancy.",
+        "species": "9606",
+        "maintainer": "Aaron Lun",
+        "id": "entrez",
+        "source": "https://github.com/LTLA/gesel-feedstock/blob/master/msigdb/build.R",
+        "url": "https://github.com/LTLA/gesel-feedstock/releases/download/msigdb-v1.0.0/c2.cp.reactome.v2023.1.Hs.entrez.gmt.gz"
+    },
+    {
+        "title": "MSigDB canonical pathways (C2 WikiPathways)",
+        "description": "WikiPathways gene sets are retrieved directly from the latest release of the WikiPathways database.",
+        "species": "9606",
+        "maintainer": "Aaron Lun",
+        "id": "entrez",
+        "source": "https://github.com/LTLA/gesel-feedstock/blob/master/msigdb/build.R",
+        "url": "https://github.com/LTLA/gesel-feedstock/releases/download/msigdb-v1.0.0/c2.cp.wikipathways.v2023.1.Hs.entrez.gmt.gz"
+    },
+    {
+        "title": "MSigDB microRNA targets (C3 MIR)",
+        "description": "These sets consist of computationally predicted human gene targets of miRNAs using the MirTarget algorithm.",
+        "species": "9606",
+        "maintainer": "Aaron Lun",
+        "id": "entrez",
+        "source": "https://github.com/LTLA/gesel-feedstock/blob/master/msigdb/build.R",
+        "url": "https://github.com/LTLA/gesel-feedstock/releases/download/msigdb-v1.0.0/c3.mir.mirdb.v2023.1.Hs.entrez.gmt.gz"
+    },
+    {
+        "title": "MSigDB transcription factor targets (C3 TFT)",
+        "description": "Sets of human genes predicted to contain transcription factor binding sites in their promoter regions (-1000,+100 bp around the transcription start site) for the indicated transcription factor. Gene sets are derived from the Gene Transcription Regulation Database (GTRD, gtrd.biouml.org) uniform processing pipeline and represent a candidate list of potential regulatory targets for each transcription factor.",
+        "species": "9606",
+        "maintainer": "Aaron Lun",
+        "id": "entrez",
+        "source": "https://github.com/LTLA/gesel-feedstock/blob/master/msigdb/build.R",
+        "url": "https://github.com/LTLA/gesel-feedstock/releases/download/msigdb-v1.0.0/c3.tft.gtrd.v2023.1.Hs.entrez.gmt.gz"
+    },
+    {
+        "title": "MSigDB cancer gene neighborhoods (C4 CGN)",
+        "description": "Gene sets obtained from Subramanian, Tamayo et al. 2005, PNAS 102, 15545-15550.",
+        "species": "9606",
+        "maintainer": "Aaron Lun",
+        "id": "entrez",
+        "source": "https://github.com/LTLA/gesel-feedstock/blob/master/msigdb/build.R",
+        "url": "https://github.com/LTLA/gesel-feedstock/releases/download/msigdb-v1.0.0/c4.cgn.v2023.1.Hs.entrez.gmt.gz"
+    },
+    {
+        "title": "MSigDB cancer modules (C4 CM)",
+        "description": "Gene sets defined by Segal E et al. Nat. Genet. 2004 Oct;36(10):1090-8.",
+        "species": "9606",
+        "maintainer": "Aaron Lun",
+        "id": "entrez",
+        "source": "https://github.com/LTLA/gesel-feedstock/blob/master/msigdb/build.R",
+        "url": "https://github.com/LTLA/gesel-feedstock/releases/download/msigdb-v1.0.0/c4.cm.v2023.1.Hs.entrez.gmt.gz"
+    },
+    {
+        "title": "MSigDB human phenotype ontology (C5 HPO)",
+        "description": "The Human Phenotype Ontology (HPO) provides a standardized vocabulary of phenotypic abnormalities encountered in human disease (https://hpo.jax.org/). An HPO annotation consists of these phenotypic abnormalities and the association between the abnormality and a set of genes known to be involved in development of said abnormality, developed using the medical literature, Orphanet, DECIPHER, and OMIM.",
+        "species": "9606",
+        "maintainer": "Aaron Lun",
+        "id": "entrez",
+        "source": "https://github.com/LTLA/gesel-feedstock/blob/master/msigdb/build.R",
+        "url": "https://github.com/LTLA/gesel-feedstock/releases/download/msigdb-v1.0.0/c5.hpo.v2023.1.Hs.entrez.gmt.gz"
+    },
+    {
+        "title": "MSigDB oncogenic signature gene sets (C6)",
+        "description": "Gene sets represent signatures of cellular pathways which are often dis-regulated in cancer. The majority of signatures were generated directly from microarray data from NCBI GEO or from internal unpublished profiling experiments which involved perturbation of known cancer genes. In addition, a small number of oncogenic signatures were curated from scientific publications.",
+        "species": "9606",
+        "maintainer": "Aaron Lun",
+        "id": "entrez",
+        "source": "https://github.com/LTLA/gesel-feedstock/blob/master/msigdb/build.R",
+        "url": "https://github.com/LTLA/gesel-feedstock/releases/download/msigdb-v1.0.0/c6.all.v2023.1.Hs.entrez.gmt.gz"
+    },
+    {
+        "title": "MSigDB ImmuneSigDB gene sets (C7 ImmuneSigDB)",
+        "description": "ImmuneSigDB is composed of gene sets that represent a broad curation effort of cell types, states, and perturbations within the immune system. The signatures were generated by manual curation of published studies in human and mouse immunology.",
+        "species": "9606",
+        "maintainer": "Aaron Lun",
+        "id": "entrez",
+        "source": "https://github.com/LTLA/gesel-feedstock/blob/master/msigdb/build.R",
+        "url": "https://github.com/LTLA/gesel-feedstock/releases/download/msigdb-v1.0.0/c7.immunesigdb.v2023.1.Hs.entrez.gmt.gz"
+    },
+    {
+        "title": "MSigDB vaccine response gene sets (C7 VAX)",
+        "description": "The immune response signatures in this collection result from the curation of gene expression results from 62 publications covering on the order of 50 vaccines by the Human Immunology Project Consortium (HIPC).",
+        "species": "9606",
+        "maintainer": "Aaron Lun",
+        "id": "entrez",
+        "source": "https://github.com/LTLA/gesel-feedstock/blob/master/msigdb/build.R",
+        "url": "https://github.com/LTLA/gesel-feedstock/releases/download/msigdb-v1.0.0/c7.vax.v2023.1.Hs.entrez.gmt.gz"
+    },
+    {
+        "title": "MSigDB cell type signature gene sets (C8)",
+        "description": "Gene sets that contain cluster marker genes for cell types identified in single-cell sequencing studies of human tissue. These gene sets have been curated from the literature and represent signature genes and cell type identifications as represented in their respective originating publications",
+        "species": "9606",
+        "maintainer": "Aaron Lun",
+        "id": "entrez",
+        "source": "https://github.com/LTLA/gesel-feedstock/blob/master/msigdb/build.R",
+        "url": "https://github.com/LTLA/gesel-feedstock/releases/download/msigdb-v1.0.0/c8.all.v2023.1.Hs.entrez.gmt.gz"
+    },
+    {
+        "title": "MSigDB hallmark gene sets (H)",
+        "description": "We envision this collection as the starting point for your exploration of the MSigDB resource and GSEA. Hallmark gene sets summarize and represent specific well-defined biological states or processes and display coherent expression. These gene sets were generated by a computational methodology based on identifying gene set overlaps and retaining genes that display coordinate expression. The hallmarks reduce noise and redundancy and provide a better delineated biological space for GSEA.",
+        "species": "9606",
+        "maintainer": "Aaron Lun",
+        "id": "entrez",
+        "source": "https://github.com/LTLA/gesel-feedstock/blob/master/msigdb/build.R",
+        "url": "https://github.com/LTLA/gesel-feedstock/releases/download/msigdb-v1.0.0/h.all.v2023.1.Hs.entrez.gmt.gz"
     }
-]
+] 
