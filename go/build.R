@@ -1,8 +1,8 @@
 GO.from.org <- function(orgdb, prefix) {
-    mappings <- select(orgdb, keytype="GO", keys=keys(orgdb, "GO"), columns="ENSEMBL")
+    mappings <- select(orgdb, keytype="GO", keys=keys(orgdb, "GO"), columns="ENTREZID")
 
     library(BiocParallel)
-    output <- split(mappings$ENSEMBL, mappings$GO)
+    output <- split(mappings$ENTREZID, mappings$GO)
     output <- bplapply(output, function(x) {
         current <- unique(sort(x))
         paste(current, collapse="\t")
