@@ -95,6 +95,11 @@ All subsequent fields contain increments from the preceding ID, i.e., computing 
 Each line contains an integer specifying the number of bytes taken up by the corresponding line in `gene2set.tsv` (excluding the newline).
 This can be used for HTTP range requests to obtain the identities of the sets containing a particular gene.
 
+`set2gene.tsv.gz` is a Gzip-compressed version of `set2gene.tsv`.
+Similarly, `gene2set.tsv.gz` is a Gzip-compressed version of `gene2set.tsv`.
+Applications can either download these `*.tsv.gz` files to obtain all relationships up-front,
+or they can download `*.ranges.gz` and perform HTTP range requests on the corresponding `*.tsv` to obtain each individual relationship.
+
 ### Text search tokens
 
 `tokens-names.tsv` is a tab-separated file where each line corresponds to a token.
@@ -117,6 +122,11 @@ This can be used for HTTP range requests to obtain the identities of the sets th
 The tokenization strategy is very simple - every contiguous stretch of ASCII alphanumeric characters or dashes (`-`) is treated as a token.
 Query strings should be processed in the same manner to generate tokens for matching against the indices.
 Handling of `?` or `*` wildcards is at the discretion of the client implementation.
+
+`tokens-names.tsv.gz` is a Gzip-compressed version of `tokens-names.tsv`.
+Similarly, `tokens-descriptions.tsv.gz` is a Gzip-compressed version of `tokens-descriptions.tsv`.
+Applications can either download these `*.tsv.gz` files to obtain all relationships up-front,
+or they can download `*.ranges.gz` and perform HTTP range requests on the corresponding `*.tsv` to obtain each individual relationship.
 
 ## Contributing gene sets
 

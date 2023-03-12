@@ -117,6 +117,11 @@ saveTabbedIndices <- function(y, path, include.names = FALSE) {
         write.table(data.frame(X=names(y), Y=strlen), col.names=FALSE, row.names=FALSE, quote=FALSE, file=handle, sep="\t")
     }
     close(handle)
+
+    # Saving a zipped copy for use in full client-side analysis.
+    handle <- gzfile(file.path(dir, paste0(path, ".gz")), open="wb")
+    write(x, file=handle)
+    close(handle)
 }
 
 saveLines <- function(lines, path, ...) {
