@@ -1,10 +1,10 @@
 # Build gene sets to feed gesel
 
-This repository contains code to build indices for **gesel**, the client-side gene set search interface.
-The indices themselves are available on the [Releases page](https://github.com/LTLA/gesel-feedstock/releases);
+This repository contains code to build the gene set database for **gesel**, the client-side gene set search interface.
+The database files themselves are available on the [Releases page](https://github.com/LTLA/gesel-feedstock/releases);
 this can be fetched by applications directly or via a CORS proxy.
 
-## Overview of resources
+## Overview of database files
 
 Each species contains a separate copy of the files described in this section.
 Files from a particular species will be prefixed with that species' NCBI taxonomy ID, e.g., `9606_ensembl.tsv.gz`.
@@ -120,7 +120,7 @@ The same logic applies to `tokens-descriptions.tsv.ranges.gz` for `tokens-descri
 This can be used for HTTP range requests to obtain the identities of the sets that match tokens in their names or descriptions.
 
 The tokenization strategy is very simple - every contiguous stretch of ASCII alphanumeric characters or dashes (`-`) is treated as a token.
-Query strings should be processed in the same manner to generate tokens for matching against the indices.
+Query strings should be processed in the same manner to generate tokens for matching against `token`.
 Handling of `?` or `*` wildcards is at the discretion of the client implementation.
 
 `tokens-names.tsv.gz` is a Gzip-compressed version of `tokens-names.tsv`.
