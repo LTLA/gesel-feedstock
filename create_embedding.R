@@ -1,5 +1,6 @@
 library(Matrix)
 dir.create("embeddings", showWarnings=FALSE)
+options(digits=5) 
 
 compute_chunked_neighbors <- function(mat, l2, num_neighbors, chunk_size, chunk_id) {
     chunk_start <- (chunk_id - 1L) * chunk_size + 1L
@@ -75,7 +76,7 @@ for (x in all.files) {
     # which is why this jittering bit is needed.
     set.seed(99)
     for (i in seq_len(ncol(dist))) {
-        dist[,i] <- sqrt(pmax(0, sort(jitter(dist[,i]))) + 0.01)
+        dist[,i] <- sqrt(sort(pmax(dist[,i], 0) + seq_len(nrow(dist)) / 1000))
     }
 
     # Forgive me, father, for I have sinned. But I just couldn't wait
@@ -97,6 +98,6 @@ for (x in all.files) {
     dev.off()
 
     handle <- gzfile(paste0('embeddings/', species, '_tsne.tsv.gz'), open="wb")
-    write.table(t(tsne_out), handle, sep="\t")
+    write.table(signif(t(tsne_out), 5), handle, sep="\t", row.names=FALSE, col.names=FALSE)
     close(handle)
 }
