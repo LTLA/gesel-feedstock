@@ -1,6 +1,5 @@
 library(Matrix)
 dir.create("embeddings", showWarnings=FALSE)
-options(digits=5) 
 
 compute_chunked_neighbors <- function(mat, l2, num_neighbors, chunk_size, chunk_id) {
     chunk_start <- (chunk_id - 1L) * chunk_size + 1L
@@ -23,7 +22,9 @@ compute_chunked_neighbors <- function(mat, l2, num_neighbors, chunk_size, chunk_
         start <- start + 1
     }
 
-    list(index = t(best), distance2 = t(dist) + l2[chunk])
+    dist <- t(dist) + l2[chunk]
+    dist[dist < 0] <- 0 # avoid small negatives due to numeric precision.
+    list(index = t(best), distance2 = dist)
 }
 
 all.files <- list.files("assets", pattern="_set2gene.tsv.gz")
@@ -70,14 +71,7 @@ for (x in all.files) {
     dist <- do.call(rbind, lapply(out, function(x) x$distance))
 
     best <- t(best)
-    dist <- t(dist)
-
-    # TODO: figure out why scran.chan doesn't like tied distances,
-    # which is why this jittering bit is needed.
-    set.seed(99)
-    for (i in seq_len(ncol(dist))) {
-        dist[,i] <- sqrt(sort(pmax(dist[,i], 0) + seq_len(nrow(dist)) / 1000))
-    }
+    dist <- sqrt(t(dist))
 
     # Forgive me, father, for I have sinned. But I just couldn't wait
     # for Rtsne to get its shit together, hence this ':::' import.
