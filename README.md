@@ -22,7 +22,7 @@ Each equivalence class is defined as a component of the graph constructed from t
 - `symbol.tsv.gz` is a Gzip-compressed tab-separated file where each line corresponds to a gene equivalence class, and the fields are symbols associated with that gene.
   An empty line indicates that the equivalence class contains no symbols.
 
-All files have the same number of lines as they represent difference aspects of the same underlying array of equivalence classes.
+All files have the same number of lines as they represent different aspects of the same underlying array of equivalence classes.
 Each gene's identity (i.e., the "gene ID") is defined as the 0-based index of the corresponding line in either file.
 
 ### Collection details
@@ -128,6 +128,14 @@ Similarly, `tokens-descriptions.tsv.gz` is a Gzip-compressed version of `tokens-
 Applications can either download these `*.tsv.gz` files to obtain all relationships up-front,
 or they can download `*.ranges.gz` and perform HTTP range requests on the corresponding `*.tsv` to obtain each individual relationship.
 
+### Embeddings
+
+`tsne.tsv.gz` is a tab-separated file where each line corresponds to a gene set in the same order as `sets.tsv.gz`.
+Each line contains two tab-separated floating-point values representing the coordinates of the set in a 2-dimensional t-SNE plot.
+
+`tsne.png` is a PNG file containing an image of the embedding.
+This is only provided for diagnostic purposes.
+
 ## Contributing gene sets
 
 Make a [pull request](https://github.com/LTLA/gesel-feedstock/pulls) and add an entry to [`manifest.json`](manifest.json) to point to a GMT file of your choice.
@@ -146,3 +154,14 @@ Each entry in the array represents a collection with the following metadata:
 - `url`: the URL to the collection's GMT file.
   This should be downloadable.
   The GMT file should use Ensembl identifiers for all genes.
+
+## Rebuilding the indices
+
+The [`define_genes.R`](define_genes.R) script will compile the equivalence classes for each species.
+This should be run first and uploaded to a GitHub Releases under a `genes-vX.Y.Z` tag.
+
+The [`build_index.R`](build_index.R) script will scan the manifest, download the GMT files and compile them into most of the files described above.
+This should be uploaded to a GitHub Release under a `indices-vA.B.C` tag.
+
+The [`create_embedding.R`](create_embedding.R) script will examine the `set2gene.tsv` file and use this to perform neighbor search for t-SNE.
+This should be added to the `indices-vA.B.C` release.
