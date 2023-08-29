@@ -165,3 +165,6 @@ This should be uploaded to a GitHub Release under a `indices-vA.B.C` tag.
 
 The [`create_embedding.R`](create_embedding.R) script will examine the `set2gene.tsv` file and use this to perform neighbor search for t-SNE.
 This should be added to the `indices-vA.B.C` release.
+
+The [`versions.json`](versions.json) specify the current versions of all the gene- and index-related resources.
+This is used to coordinate versions across different scripts.

@@ -1,5 +1,12 @@
+# This uses the gene set information to find nearest neighbors after converting
+# each gene set into a proportions vector. We then use the neighbor results to
+# compute a t-SNE embedding where each point is a set.
+
 library(Matrix)
-dir.create("embeddings", showWarnings=FALSE)
+versions <- jsonlite::fromJSON("versions.json", simplifyVector=FALSE)
+index.dir <- paste0("indices-", versions$indices)
+embedding.dir <- paste0("embeddings-", versions$indices)
+dir.create(embedding.dir, showWarnings=FALSE)
 
 compute_chunked_neighbors <- function(mat, l2, num_neighbors, chunk_size, chunk_id) {
     chunk_start <- (chunk_id - 1L) * chunk_size + 1L
@@ -27,9 +34,18 @@ compute_chunked_neighbors <- function(mat, l2, num_neighbors, chunk_size, chunk_
     list(index = t(best), distance2 = dist)
 }
 
-all.files <- list.files("assets", pattern="_set2gene.tsv.gz")
-for (x in all.files) {
-    lines <- readLines(file.path("assets", x))
+manifest <- jsonlite::fromJSON("manifest.json", simplifyVector=FALSE)
+all.species <- unique(unlist(lapply(manifest, function(x) x$species)))
+
+for (x in all.species) {
+    # Downloading the set files from a remote if we didn't generate them locally.
+    set.file <- paste0(x, "_set2gene.tsv.gz")
+    set.path <- paste0(index.dir, "/", set.file)
+    if (!file.exists(set.path)) {
+        set.path <- bfcrpath(bfc, paste0("https://github.com/LTLA/gesel-feedstock/releases/download/indices-", versions$indices, "/", set.file))
+    }
+
+    lines <- readLines(set.path)
     segments <- strsplit(lines, "\t")
     segments <- lapply(segments, function(x) cumsum(as.integer(x)) + 1L)
 
@@ -87,11 +103,11 @@ for (x in all.files) {
     )
 
     species <- sub("_.*", "", x)
-    png(paste0("embeddings/", species, "_tsne.png"), width=6, height=6, units="in", res=150)
+    png(paste0(embedding.dir, "/", species, "_tsne.png"), width=6, height=6, units="in", res=150)
     plot(tsne_out[1,], tsne_out[2,], pch=16, cex=0.1, xlab="t-SNE 1", ylab="t-SNE 2", main = species)
     dev.off()
 
-    handle <- gzfile(paste0('embeddings/', species, '_tsne.tsv.gz'), open="wb")
+    handle <- gzfile(paste0(embedding.dir, '/', species, '_tsne.tsv.gz'), open="wb")
     write.table(signif(t(tsne_out), 5), handle, sep="\t", row.names=FALSE, col.names=FALSE)
     close(handle)
 }

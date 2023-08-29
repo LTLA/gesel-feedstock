@@ -1,9 +1,16 @@
+# This cross-references the GMT files in the 'manifest.json' against the genes
+# in the equivalence classes, and then builds all the index files described in
+# the 'README.md' based on the gene IDs.
+
 library(jsonlite)
 library(S4Vectors)
 library(BiocFileCache)
 bfc <- BiocFileCache("gmt_cache", ask=FALSE)
 
 manifest <- jsonlite::fromJSON("manifest.json", simplifyVector=FALSE)
+versions <- jsonlite::fromJSON("versions.json", simplifyVector=FALSE)
+gene.dir <- paste0("genes-", versions$genes)
+index.dir <- paste0("indices-", versions$indices)
 
 species.descriptions <- list()
 species.collections <- list()
@@ -49,10 +56,16 @@ for (i in seq_along(manifest)) {
     counter <- species.counter[[cur.species]]
     set.ids <- rep(seq_along(cursets) + counter, lengths(cursets))
 
-    # Mapping to the gene IDs.
+    # Mapping to the gene IDs. Here, we download the gene files from 
+    # a remote if we didn't generate them locally.
     gene.mappings <- species.mapping[[cur.species]]
     if (!(current$id %in% names(gene.mappings))) {
-        gene.path <- bfcrpath(bfc, paste0("https://github.com/LTLA/gesel-feedstock/releases/download/genes-v1.0.0/", cur.species, "_", current$id, ".tsv.gz"))
+        gene.file <- paste0(cur.species, "_", current$id, ".tsv.gz")
+        gene.path <- file.path(gene.dir, gene.file)
+        if (!file.exists(gene.path)) {
+            gene.path <- bfcrpath(bfc, paste0("https://github.com/LTLA/gesel-feedstock/releases/download/genes-", versions$genes, "/", gene.file))
+        }
+
         all.lines <- readLines(gene.path)
         species.ngenes[[cur.species]] <- length(all.lines)
 
@@ -94,8 +107,7 @@ tokenizer <- function(x) {
     by.token[!(names(by.token) %in% c("", "-"))]
 }
 
-dir <- "assets"
-dir.create(dir)
+dir.create(index.dir)
 
 saveTabbedIndices <- function(y, path, include.names = FALSE) {
     x <- vapply(y, function(z) {
@@ -107,10 +119,10 @@ saveTabbedIndices <- function(y, path, include.names = FALSE) {
             ""
         }
     }, "")
-    write(x, file=file.path(dir, path))
+    write(x, file=file.path(index.dir, path))
 
     strlen <- nchar(x, type="bytes") # deal with UTF-8 chars.
-    handle <- gzfile(file.path(dir, paste0(path, ".ranges.gz")), open="wb")
+    handle <- gzfile(file.path(index.dir, paste0(path, ".ranges.gz")), open="wb")
     if (!include.names || is.null(names(y))) {
         write(strlen, file=handle, ncolumns=1)
     } else {
@@ -119,17 +131,17 @@ saveTabbedIndices <- function(y, path, include.names = FALSE) {
     close(handle)
 
     # Saving a zipped copy for use in full client-side analysis.
-    handle <- gzfile(file.path(dir, paste0(path, ".gz")), open="wb")
+    handle <- gzfile(file.path(index.dir, paste0(path, ".gz")), open="wb")
     write(x, file=handle)
     close(handle)
 }
 
 saveLines <- function(lines, path, ...) {
-    write(lines, file=file.path(dir, path))
+    write(lines, file=file.path(index.dir, path))
 
     nc <- nchar(lines, type="bytes") # deal with UTF-8 chars.
 
-    handle <- gzfile(file.path(dir, paste0(path, ".ranges.gz")), open="wb")
+    handle <- gzfile(file.path(index.dir, paste0(path, ".ranges.gz")), open="wb")
     write.table(data.frame(X=nc, ...), file=handle, row.names=FALSE, quote=FALSE, col.names=FALSE, sep="\t")
     close(handle)
 }
@@ -168,7 +180,7 @@ for (species in names(species.descriptions)) {
         saveLines(common, paste0(species, "_collections.tsv"), size=collections$number)
 
         collected <- sprintf("%s\t%s", common, collections$number)
-        handle <- gzfile(file.path(dir, paste0(species, "_collections.tsv.gz")))
+        handle <- gzfile(file.path(index.dir, paste0(species, "_collections.tsv.gz")))
         write(collected, file=handle, ncolumns=1)
         close(handle)
     }
@@ -180,7 +192,7 @@ for (species in names(species.descriptions)) {
         saveLines(common, paste0(species, "_sets.tsv"), size=descriptions$size)
 
         collected <- sprintf("%s\t%s", common, descriptions$size)
-        handle <- gzfile(file.path(dir, paste0(species, "_sets.tsv.gz")))
+        handle <- gzfile(file.path(index.dir, paste0(species, "_sets.tsv.gz")))
         write(collected, file=handle, ncolumns=1)
         close(handle)
     }

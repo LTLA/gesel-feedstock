@@ -2,5 +2,6 @@
 *.swp
 *_cache/
 assets/
-genes/
-embeddings/
+indices*/
+genes*/
+embeddings*/

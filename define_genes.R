@@ -2,8 +2,8 @@
 # Ensembl ID and Entrez ID. The idea here is to be less tied to a single
 # primary identifier, but treat both Ensembl and Entrez as equal partners.
 #
-# Here, we're generally using Ensembl 108 for our EnsDb objects, and
-# whatever happens to be the current state of the OrgDb objects.
+# Here, we're generally using Ensembl 108 for our EnsDb objects, and whatever
+# happens to be the current state of the OrgDb objects.
 
 library(AnnotationHub)
 ahub <- AnnotationHub(cache="ahub_cache", ask=FALSE)
@@ -18,8 +18,12 @@ lists <- list(
     `9598` = list(ensdb = "AH109433", orgdb = "AH107055")
 )
 
+library(jsonlite)
+gene.version <- fromJSON("versions.json")["genes"]
+dir <- paste0("genes-", gene.version)
+
 library(BiocParallel)
-dir.create("genes", showWarnings=FALSE)
+dir.create(dir, showWarnings=FALSE)
 dump <- function(x, out) {
     if (is.list(x)) {
         dump <- unlist(bplapply(x, paste, collapse="\t", BPPARAM=MulticoreParam()))
