@@ -1,5 +1,9 @@
 # Build gene sets to feed gesel
 
+> [!IMPORTANT]
+> This repository is now deprecated and is only kept around for back-compatibility.
+> See https://github.com/gesel-inc/feedstock for the new location.
+
 This repository contains code to build the gene set database for **gesel**, the client-side gene set search interface.
 The database files themselves are available on the [Releases page](https://github.com/LTLA/gesel-feedstock/releases);
 this can be fetched by applications directly or via a CORS proxy.
